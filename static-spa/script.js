@@ -485,27 +485,161 @@ function createForumPost() {
 
 // ===== BERATER =====
 const beraterList = [
-  { id: '1', name: 'Dr. Sarah Weber', role: 'Psychologin', desc: 'Spezialistin für Prüfungsangst und Stressbewältigung.', image: 'assets/sarah-mentor.png', available: true },
-  { id: '2', name: 'Thomas Müller', role: 'Lerncoach', desc: 'Experte für Lernstrategien und Zeitmanagement.', image: 'assets/oliver-mentor.png', available: true },
-  { id: '3', name: 'Anna Schmidt', role: 'Sozialberaterin', desc: 'Hilft bei finanziellen Sorgen und sozialen Fragen.', image: 'assets/martina-mentor.png', available: false }
+  { id: '1', name: 'Frau Koch', role: 'Psychologische Beraterin', desc: 'Ich bin seit 10 Jahren als psychologische Beraterin an der Universität tätig. Meine Schwerpunkte sind Prüfungsangst, Stressbewältigung und persönliche Krisen.', image: 'assets/sarah-mentor.png', available: true },
+  { id: '2', name: 'Herr Müller', role: 'Studienberater', desc: 'Als Studienberater unterstütze ich dich bei Fragen rund ums Studium - von Fachwechsel bis Prüfungsordnung.', image: 'assets/oliver-mentor.png', available: true },
+  { id: '3', name: 'Frau Schmidt', role: 'Sozialberaterin', desc: 'Finanzielle Sorgen, BAföG-Fragen oder Nebenjob-Probleme? Ich helfe dir, dich auf dein Studium konzentrieren zu können.', image: 'assets/martina-mentor.png', available: false }
 ];
+
+let bookedAppointments = JSON.parse(localStorage.getItem('booked-appointments') || '[]');
+let selectedAppointmentDate = null;
 
 function initBerater() {
   const container = document.getElementById('berater-list');
   container.innerHTML = beraterList.map(b => `
-    <div class="berater-card">
-      <img src="${b.image}" alt="${b.name}" class="berater-image">
-      <div class="berater-content">
-        <h3 class="berater-name">${b.name}</h3>
-        <p class="berater-role">${b.role}</p>
-        <p class="berater-desc">${b.desc}</p>
-        <span class="berater-status ${b.available ? 'available' : 'unavailable'}">${b.available ? 'Verfügbar' : 'Nicht verfügbar'}</span>
-        <div class="berater-actions">
-          <button class="btn btn-primary btn-sm guest-lockable ${State.isGuest ? 'locked' : ''}" onclick="openChat('${b.id}')" ${!b.available ? 'disabled' : ''}>Chat starten</button>
+    <div class="berater-card-horizontal">
+      <div class="berater-card-inner">
+        <img src="${b.image}" alt="${b.name}" class="berater-image">
+        <div class="berater-content">
+          <div class="berater-header">
+            <span class="berater-name">${b.name}</span>
+            <span class="berater-status ${b.available ? 'available' : 'unavailable'}">${b.available ? 'Verfügbar' : 'Nicht verfügbar'}</span>
+          </div>
+          <p class="berater-role">${b.role}</p>
+          <p class="berater-desc">${b.desc}</p>
+          <div class="berater-actions">
+            <button class="btn btn-primary ${State.isGuest ? 'locked' : ''}" onclick="openChat('${b.id}')" ${!b.available || State.isGuest ? 'disabled' : ''}>Connect</button>
+          </div>
         </div>
       </div>
     </div>
   `).join('');
+  
+  renderBookedAppointments();
+  renderAppointmentDates();
+  
+  // Handle guest mode
+  const appointmentCard = document.getElementById('appointment-card');
+  if (State.isGuest && appointmentCard) {
+    appointmentCard.classList.add('disabled');
+    appointmentCard.onclick = null;
+  }
+}
+
+function renderBookedAppointments() {
+  const banner = document.getElementById('booked-appointments-banner');
+  const list = document.getElementById('booked-appointments-list');
+  if (!banner || !list) return;
+  
+  if (bookedAppointments.length === 0) {
+    banner.style.display = 'none';
+    return;
+  }
+  
+  banner.style.display = 'block';
+  list.innerHTML = bookedAppointments.map((app, idx) => {
+    const berater = beraterList.find(b => b.id === app.beraterId);
+    const dateStr = new Date(app.date).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
+    return `<div class="booked-appointment-item">
+      <div class="booked-appointment-info">
+        <img src="${berater?.image || ''}" alt="${berater?.name || ''}">
+        <div>
+          <p>${dateStr} um ${app.time} Uhr</p>
+          <span>${berater?.name} - ${berater?.role}</span>
+        </div>
+      </div>
+      <button class="btn btn-destructive btn-sm" onclick="cancelAppointment(${idx})">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        Stornieren
+      </button>
+    </div>`;
+  }).join('');
+}
+
+function cancelAppointment(idx) {
+  bookedAppointments.splice(idx, 1);
+  localStorage.setItem('booked-appointments', JSON.stringify(bookedAppointments));
+  renderBookedAppointments();
+  showToast('Termin storniert');
+}
+
+function renderAppointmentDates() {
+  const container = document.getElementById('appointment-dates');
+  if (!container) return;
+  
+  const days = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
+  const months = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
+  let html = '';
+  
+  for (let i = 1; i <= 7; i++) {
+    const date = new Date();
+    date.setDate(date.getDate() + i);
+    const dateStr = date.toISOString().split('T')[0];
+    html += `<button class="appointment-date-btn" data-date="${dateStr}" onclick="selectAppointmentDate('${dateStr}')">
+      <span class="day">${days[date.getDay()]}</span>
+      <span class="date">${date.getDate()}</span>
+      <span class="month">${months[date.getMonth()]}</span>
+    </button>`;
+  }
+  container.innerHTML = html;
+}
+
+function selectAppointmentDate(dateStr) {
+  selectedAppointmentDate = dateStr;
+  document.querySelectorAll('.appointment-date-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.date === dateStr);
+  });
+  renderAppointmentSlots(dateStr);
+}
+
+function renderAppointmentSlots(dateStr) {
+  const container = document.getElementById('appointment-slots-container');
+  const slotsEl = document.getElementById('appointment-slots');
+  container.style.display = 'block';
+  
+  const times = ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00'];
+  let html = '';
+  
+  beraterList.filter(b => b.available).forEach(berater => {
+    const availableTimes = times.filter((t, idx) => (parseInt(berater.id) + new Date(dateStr).getDay() + idx) % 3 !== 0);
+    availableTimes.forEach(time => {
+      const isBooked = bookedAppointments.some(a => a.date === dateStr && a.time === time && a.beraterId === berater.id);
+      if (!isBooked) {
+        html += `<div class="slot-item">
+          <div class="slot-berater">
+            <img src="${berater.image}" alt="${berater.name}">
+            <div class="slot-berater-info">
+              <p>${berater.name}</p>
+              <span>${berater.role}</span>
+            </div>
+          </div>
+          <div>
+            <span class="slot-time">${time}</span>
+            <button class="btn btn-primary btn-sm" onclick="bookAppointment('${berater.id}', '${dateStr}', '${time}')">Buchen</button>
+          </div>
+        </div>`;
+      }
+    });
+  });
+  
+  slotsEl.innerHTML = html || '<p style="color: var(--muted-foreground); text-align: center; padding: 1rem;">Keine Termine verfügbar</p>';
+}
+
+function bookAppointment(beraterId, date, time) {
+  bookedAppointments.push({ beraterId, date, time });
+  localStorage.setItem('booked-appointments', JSON.stringify(bookedAppointments));
+  
+  const berater = beraterList.find(b => b.id === beraterId);
+  const dateStr = new Date(date).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
+  
+  document.getElementById('booking-details').innerHTML = `
+    <p><strong>${berater?.name}</strong></p>
+    <p>${dateStr} um ${time} Uhr</p>
+  `;
+  
+  closeDialog('appointment-dialog');
+  openDialog('booking-confirmation-dialog');
+  renderBookedAppointments();
+  showToast('Termin gebucht! 🎉');
 }
 
 function openChat(beraterId) {
@@ -533,6 +667,15 @@ function sendChatMessage() {
     container.innerHTML += `<div class="chat-message berater">Danke für deine Nachricht. Ich melde mich bald bei dir!</div>`;
     container.scrollTop = container.scrollHeight;
   }, 1000);
+}
+
+function sendAnonymousMessage() {
+  const msg = document.getElementById('anonymous-message').value.trim();
+  if (!msg) { showToast('Bitte Nachricht eingeben'); return; }
+  
+  closeDialog('anonymous-chat-dialog');
+  showToast('Nachricht gesendet! Ein Berater wird sich melden.');
+  document.getElementById('anonymous-message').value = '';
 }
 
 // ===== NOTENPLANER =====
