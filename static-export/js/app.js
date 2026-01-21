@@ -650,3 +650,215 @@ function loadDemoData() {
     MoodTracker.updateUI();
   }
 }
+
+// ===== CALENDAR EVENTS (Day Details) =====
+const CalendarEvents = {
+  events: {},
+  
+  init() {
+    this.events = JSON.parse(localStorage.getItem('calendar-events') || '{}');
+  },
+  
+  save(dateKey, data) {
+    if (data.event || data.note || data.borderColor !== 'none') {
+      this.events[dateKey] = data;
+    } else {
+      delete this.events[dateKey];
+    }
+    localStorage.setItem('calendar-events', JSON.stringify(this.events));
+  },
+  
+  get(dateKey) {
+    return this.events[dateKey] || { event: '', note: '', borderColor: 'none' };
+  }
+};
+
+// ===== FORUM FUNCTIONALITY =====
+const ForumManager = {
+  posts: [],
+  comments: {},
+  
+  init() {
+    this.posts = JSON.parse(localStorage.getItem('forum-posts') || '[]');
+    this.comments = JSON.parse(localStorage.getItem('forum-comments') || '{}');
+  },
+  
+  createPost(data) {
+    const post = {
+      id: Date.now().toString(),
+      ...data,
+      createdAt: new Date().toISOString(),
+      likes: 0
+    };
+    this.posts.unshift(post);
+    localStorage.setItem('forum-posts', JSON.stringify(this.posts));
+    
+    // Update badge progress
+    const postCount = this.posts.filter(p => p.author === data.author).length;
+    this.updateBadgeProgress('first_forum_post', postCount);
+    this.updateBadgeProgress('forum_regular', postCount);
+    
+    return post;
+  },
+  
+  addComment(postId, comment) {
+    if (!this.comments[postId]) {
+      this.comments[postId] = [];
+    }
+    this.comments[postId].push({
+      id: Date.now().toString(),
+      ...comment,
+      createdAt: new Date().toISOString()
+    });
+    localStorage.setItem('forum-comments', JSON.stringify(this.comments));
+  },
+  
+  deletePost(postId) {
+    this.posts = this.posts.filter(p => p.id !== postId);
+    delete this.comments[postId];
+    localStorage.setItem('forum-posts', JSON.stringify(this.posts));
+    localStorage.setItem('forum-comments', JSON.stringify(this.comments));
+  },
+  
+  updateBadgeProgress(badgeId, progress) {
+    const badgeProgress = JSON.parse(localStorage.getItem('badgeProgress') || '{}');
+    badgeProgress[badgeId] = progress;
+    localStorage.setItem('badgeProgress', JSON.stringify(badgeProgress));
+  }
+};
+
+// ===== BADGE SYSTEM =====
+const BadgeSystem = {
+  unlock(badgeId, exp) {
+    const unlockedBadges = JSON.parse(localStorage.getItem('unlockedBadges') || '{}');
+    if (unlockedBadges[badgeId]) return false;
+    
+    unlockedBadges[badgeId] = true;
+    localStorage.setItem('unlockedBadges', JSON.stringify(unlockedBadges));
+    
+    const currentExp = parseInt(localStorage.getItem('userExp') || '0');
+    localStorage.setItem('userExp', String(currentExp + exp));
+    
+    return true;
+  },
+  
+  updateProgress(badgeId, progress, maxProgress, exp) {
+    const badgeProgress = JSON.parse(localStorage.getItem('badgeProgress') || '{}');
+    badgeProgress[badgeId] = progress;
+    localStorage.setItem('badgeProgress', JSON.stringify(badgeProgress));
+    
+    if (maxProgress && progress >= maxProgress) {
+      this.unlock(badgeId, exp);
+    }
+  }
+};
+
+// ===== COPING DIALOG ENHANCED =====
+const CopingDialog = {
+  categories: [
+    { id: 'einsamkeit', label: 'Einsamkeit', icon: '👥' },
+    { id: 'angst', label: 'Angst', icon: '💜' },
+    { id: 'stress', label: 'Stress', icon: '🔥' },
+    { id: 'ueberforderung', label: 'Überforderung', icon: '🧠' }
+  ],
+  
+  exercises: {
+    einsamkeit: {
+      short: { title: 'Selbstmitgefühl-Moment', duration: '2 Min', steps: ['Lege eine Hand auf dein Herz', 'Spüre deinen Herzschlag', 'Sage dir: "Ich bin nicht allein"', 'Atme 3x tief ein und aus'] },
+      medium: { title: 'Dankbarkeits-Reflexion', duration: '5 Min', steps: ['Schließe die Augen', 'Denke an 3 Menschen', 'Erinnere dich an schöne Momente', 'Spüre die Wärme'] },
+      long: { title: 'Verbindungs-Meditation', duration: '10 Min', steps: ['Finde eine bequeme Position', 'Atme 5x tief', 'Visualisiere goldenes Licht', 'Sende gute Wünsche'] }
+    },
+    angst: {
+      short: { title: '4-7-8 Atemtechnik', duration: '2 Min', steps: ['Einatmen (4 Sek)', 'Halten (7 Sek)', 'Ausatmen (8 Sek)', 'Wiederhole 3-4x'] },
+      medium: { title: '5-4-3-2-1 Grounding', duration: '5 Min', steps: ['5 Dinge sehen', '4 Dinge hören', '3 Dinge fühlen', '2 Dinge riechen', '1 Ding schmecken'] },
+      long: { title: 'Body Scan', duration: '10 Min', steps: ['Lege dich hin', 'Entspanne Füße bis Kopf', 'Spüre jeden Körperteil', 'Löse alle Spannungen'] }
+    },
+    stress: {
+      short: { title: 'Box Breathing', duration: '2 Min', steps: ['Einatmen 4s', 'Halten 4s', 'Ausatmen 4s', 'Halten 4s', 'Wiederhole'] },
+      medium: { title: 'Muskelentspannung', duration: '5 Min', steps: ['Fäuste ballen & loslassen', 'Schultern hochziehen & fallen lassen', 'Bauch anspannen & entspannen'] },
+      long: { title: 'Achtsame Pause', duration: '10 Min', steps: ['Ruhiger Ort', 'Augen schließen', 'Gedanken beobachten', 'Auf Atem fokussieren'] }
+    },
+    ueberforderung: {
+      short: { title: 'Gedanken-Stopp', duration: '2 Min', steps: ['Sage "STOPP"', 'Atme 3x tief', 'Fokussiere EINE Sache', 'Beschreibe sie detailliert'] },
+      medium: { title: 'Prioritäten-Klarheit', duration: '5 Min', steps: ['Schreibe alles auf', 'Markiere das Wichtigste', 'Streiche was warten kann', 'Wähle EINEN nächsten Schritt'] },
+      long: { title: 'Reset-Routine', duration: '10 Min', steps: ['Kurz bewegen', 'Wasser trinken', 'Fenster öffnen', '10 tiefe Atemzüge', '3 Dankbarkeiten'] }
+    }
+  },
+  
+  trackExercise(category) {
+    const count = parseInt(localStorage.getItem('hugoExercisesCompleted') || '0') + 1;
+    localStorage.setItem('hugoExercisesCompleted', String(count));
+    
+    // Track categories
+    const usedCategories = JSON.parse(localStorage.getItem('hugoCategoriesUsed') || '[]');
+    if (!usedCategories.includes(category)) {
+      usedCategories.push(category);
+      localStorage.setItem('hugoCategoriesUsed', JSON.stringify(usedCategories));
+    }
+    
+    // Update badges
+    BadgeSystem.updateProgress('hugo_regular', count, 10, 75);
+    BadgeSystem.updateProgress('hugo_master', count, 25, 150);
+    BadgeSystem.updateProgress('hugo_all_categories', usedCategories.length, 4, 50);
+    
+    if (count === 1) {
+      if (BadgeSystem.unlock('first_hugo_exercise', 20)) {
+        showToast('🎉 Badge: Hugos Freund! +20 EXP');
+      }
+    }
+  }
+};
+
+// ===== STUNDENPLAN (Timetable) =====
+const Stundenplan = {
+  entries: [],
+  
+  init() {
+    this.entries = JSON.parse(localStorage.getItem('stundenplan') || '[]');
+  },
+  
+  addEntry(entry) {
+    entry.id = Date.now().toString();
+    this.entries.push(entry);
+    localStorage.setItem('stundenplan', JSON.stringify(this.entries));
+    return entry;
+  },
+  
+  deleteEntry(id) {
+    this.entries = this.entries.filter(e => e.id !== id);
+    localStorage.setItem('stundenplan', JSON.stringify(this.entries));
+  },
+  
+  getEntriesForDay(day) {
+    return this.entries.filter(e => e.day === day).sort((a, b) => a.startTime.localeCompare(b.startTime));
+  }
+};
+
+// ===== ARTICLE READING TRACKING =====
+const ArticleTracker = {
+  track(articleId) {
+    const readArticles = JSON.parse(localStorage.getItem('readArticles') || '[]');
+    if (!readArticles.includes(articleId)) {
+      readArticles.push(articleId);
+      localStorage.setItem('readArticles', JSON.stringify(readArticles));
+      
+      BadgeSystem.updateProgress('article_reader', readArticles.length, 5, 40);
+    }
+  }
+};
+
+// ===== DARK MODE =====
+function initDarkMode() {
+  const isDark = localStorage.getItem('theme') === 'dark';
+  if (isDark) {
+    document.documentElement.classList.add('dark');
+  }
+}
+
+// Initialize on load
+document.addEventListener('DOMContentLoaded', () => {
+  CalendarEvents.init();
+  ForumManager.init();
+  Stundenplan.init();
+  initDarkMode();
+});

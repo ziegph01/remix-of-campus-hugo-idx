@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Dein Profil - Campus Hugo">
+  <title>Dein Profil - Campus Hugo</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="assets/sloth-icon.png">
+  <style>
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .profile-icon {
+      width: 3rem;
+      height: 3rem;
+      background: hsl(var(--primary) / 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .profile-icon svg {
+      width: 1.5rem;
+      height: 1.5rem;
+      color: hsl(var(--primary));
+    }
+    
+    .tabs {
+      display: flex;
+      gap: 0.25rem;
+      background: var(--muted);
+      padding: 0.25rem;
+      border-radius: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 0.625rem 1rem;
+      border: none;
+      background: transparent;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 0.375rem;
+      transition: all 0.2s;
+      color: var(--muted-foreground);
+    }
+    .tab-btn.active {
+      background: var(--card);
+      color: var(--foreground);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    
+    /* Badge System */
+    .level-card {
+      background: linear-gradient(135deg, hsl(var(--primary) / 0.2), hsl(var(--primary) / 0.05));
+      border-radius: 1rem;
+      padding: 1.5rem;
+      border: 1px solid hsl(var(--primary) / 0.2);
+      margin-bottom: 1.5rem;
+    }
+    .level-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .level-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .level-badge {
+      width: 3.5rem;
+      height: 3.5rem;
+      background: hsl(var(--primary));
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+      box-shadow: 0 4px 12px hsl(var(--primary) / 0.3);
+    }
+    .level-text h3 {
+      font-size: 1.125rem;
+      font-weight: 700;
+    }
+    .level-text p {
+      font-size: 0.875rem;
+      color: var(--muted-foreground);
+    }
+    .level-stats {
+      text-align: right;
+    }
+    .level-stats .count {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: hsl(var(--primary));
+    }
+    .level-stats .label {
+      font-size: 0.75rem;
+      color: var(--muted-foreground);
+    }
+    .progress-bar {
+      background: var(--muted);
+      height: 0.5rem;
+      border-radius: 1rem;
+      overflow: hidden;
+    }
+    .progress-fill {
+      background: hsl(var(--primary));
+      height: 100%;
+      transition: width 0.5s ease;
+    }
+    .progress-text {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--muted-foreground);
+      margin-bottom: 0.25rem;
+    }
+    
+    .badges-section h3 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .badges-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+    @media (min-width: 768px) {
+      .badges-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    .badge-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1rem;
+      text-align: center;
+      position: relative;
+      transition: all 0.3s;
+    }
+    .badge-card.locked {
+      opacity: 0.6;
+      background: var(--muted);
+    }
+    .badge-card:not(.locked):hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .badge-icon {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 0.5rem;
+      color: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .badge-icon svg {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+    .badge-name {
+      font-weight: 600;
+      font-size: 0.875rem;
+      margin-bottom: 0.25rem;
+    }
+    .badge-desc {
+      font-size: 0.75rem;
+      color: var(--muted-foreground);
+      margin-bottom: 0.5rem;
+    }
+    .badge-exp {
+      display: inline-block;
+      padding: 0.125rem 0.5rem;
+      background: hsl(var(--primary) / 0.1);
+      color: hsl(var(--primary));
+      border-radius: 1rem;
+      font-size: 0.625rem;
+      font-weight: 600;
+    }
+    .badge-card.locked .badge-exp {
+      background: var(--muted);
+      color: var(--muted-foreground);
+    }
+    .badge-progress {
+      height: 0.25rem;
+      background: var(--muted);
+      border-radius: 1rem;
+      margin-top: 0.5rem;
+      overflow: hidden;
+    }
+    .badge-progress-fill {
+      height: 100%;
+      transition: width 0.5s;
+    }
+    .badge-progress-text {
+      font-size: 0.625rem;
+      color: var(--muted-foreground);
+      margin-top: 0.25rem;
+    }
+    .badge-unlocked {
+      position: absolute;
+      top: -0.25rem;
+      right: -0.25rem;
+      width: 1.25rem;
+      height: 1.25rem;
+      background: #22c55e;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .badge-unlocked svg {
+      width: 0.75rem;
+      height: 0.75rem;
+      color: white;
+    }
+    
+    /* Settings Form */
+    .settings-card {
+      background: var(--card);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .settings-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .settings-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      background: hsl(var(--primary) / 0.1);
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .settings-icon svg {
+      width: 1.25rem;
+      height: 1.25rem;
+      color: hsl(var(--primary));
+    }
+    .settings-card h2 {
+      font-size: 1.125rem;
+      font-weight: 700;
+    }
+    
+    .avatar-section {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .avatar {
+      width: 5rem;
+      height: 5rem;
+      border-radius: 50%;
+      background: hsl(var(--primary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 700;
+      color: white;
+      border: 4px solid var(--card);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      position: relative;
+      overflow: hidden;
+    }
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .avatar-upload {
+      position: absolute;
+      bottom: -0.25rem;
+      right: -0.25rem;
+      width: 2rem;
+      height: 2rem;
+      background: hsl(var(--primary));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .avatar-upload svg {
+      width: 1rem;
+      height: 1rem;
+      color: white;
+    }
+    .avatar-upload input {
+      display: none;
+    }
+    .avatar-info h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    .avatar-info p {
+      color: var(--muted-foreground);
+    }
+    
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.625rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      background: var(--background);
+      font-family: inherit;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: hsl(var(--primary));
+      box-shadow: 0 0 0 3px hsl(var(--primary) / 0.1);
+    }
+    .form-group textarea {
+      resize: none;
+    }
+    .form-hint {
+      font-size: 0.75rem;
+      color: var(--muted-foreground);
+      margin-top: 0.25rem;
+    }
+    
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem;
+      background: var(--muted);
+      border-radius: 0.75rem;
+    }
+    .toggle-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .toggle-info svg {
+      width: 1.25rem;
+      height: 1.25rem;
+      color: hsl(var(--primary));
+    }
+    .toggle-info .title {
+      font-weight: 500;
+    }
+    .toggle-info .desc {
+      font-size: 0.875rem;
+      color: var(--muted-foreground);
+    }
+    .toggle-switch {
+      position: relative;
+      width: 2.75rem;
+      height: 1.5rem;
+      background: var(--border);
+      border-radius: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .toggle-switch.active {
+      background: hsl(var(--primary));
+    }
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      top: 0.125rem;
+      left: 0.125rem;
+      width: 1.25rem;
+      height: 1.25rem;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    .toggle-switch.active::after {
+      transform: translateX(1.25rem);
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="dashboard.html" class="header-logo">
+        <img src="assets/sloth-icon.png" alt="Logo">
+        <div class="header-logo-text">
+          <span class="header-logo-title">Campus Hugo</span>
+        </div>
+      </a>
+      
+      <button class="menu-btn" aria-label="Menü öffnen">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+  
+  <!-- Menu Overlay -->
+  <div class="menu-overlay"></div>
+  <div class="menu-dropdown">
+    <nav>
+      <a href="dashboard.html">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Home
+      </a>
+      <a href="forum.html">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+        Forum
+      </a>
+      <a href="berater.html">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Beratung
+      </a>
+      <a href="notenplaner.html">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg>
+        Notenplaner
+      </a>
+      <a href="artikel.html">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Wissen
+      </a>
+      <a href="einstellungen.html" class="active">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+        Dein Profil
+      </a>
+      <div class="menu-divider"></div>
+      <a href="index.html" class="accent-link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+        Log Out
+      </a>
+    </nav>
+  </div>
+
+  <main class="page-container" style="padding-top: 1.5rem; padding-bottom: 2rem; max-width: 42rem;">
+    <!-- Header -->
+    <div class="profile-header">
+      <div class="profile-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+      </div>
+      <div>
+        <h1>Dein Profil</h1>
+        <p style="color: var(--muted-foreground);" id="level-text">Level 1 • 0 EXP</p>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="badges">🏆 Badges & EXP</button>
+      <button class="tab-btn" data-tab="settings">⚙️ Einstellungen</button>
+    </div>
+
+    <!-- Badges Tab -->
+    <div class="tab-content active" id="tab-badges">
+      <!-- Level Card -->
+      <div class="level-card">
+        <div class="level-header">
+          <div class="level-info">
+            <div class="level-badge" id="level-badge">1</div>
+            <div class="level-text">
+              <h3 id="level-title">Level 1</h3>
+              <p id="exp-text">0 EXP gesammelt</p>
+            </div>
+          </div>
+          <div class="level-stats">
+            <p class="count" id="badge-count">0/16</p>
+            <p class="label">Badges</p>
+          </div>
+        </div>
+        <div class="progress-text">
+          <span id="progress-label">Fortschritt zu Level 2</span>
+          <span id="progress-exp">0/100 EXP</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill" style="width: 0%;"></div>
+        </div>
+      </div>
+
+      <!-- Badges Grid -->
+      <div class="badges-section">
+        <h3>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+          Deine Badges
+        </h3>
+        <div class="badges-grid" id="badges-grid">
+          <!-- Will be populated by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Tab -->
+    <div class="tab-content" id="tab-settings">
+      <!-- Profile Section -->
+      <div class="settings-card">
+        <div class="avatar-section">
+          <div class="avatar" id="avatar">
+            <span id="avatar-initial">?</span>
+            <img id="avatar-img" src="" alt="" style="display: none;">
+            <label class="avatar-upload">
+              <input type="file" accept="image/*" id="avatar-upload">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </label>
+          </div>
+          <div class="avatar-info">
+            <h3 id="profile-name">Student</h3>
+            <p id="profile-school">Dein Profil</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="username">Benutzername</label>
+          <input type="text" id="username" placeholder="Dein Name">
+        </div>
+        <div class="form-group">
+          <label for="profiltext">Profiltext</label>
+          <textarea id="profiltext" rows="3" placeholder="Erzähl etwas über dich... z.B. Hobbys, was dich ausmacht, Fun Facts 🌟"></textarea>
+          <p class="form-hint">Dieser Text wird anderen Nutzern angezeigt.</p>
+        </div>
+      </div>
+
+      <!-- Studium Section -->
+      <div class="settings-card">
+        <div class="settings-card-header">
+          <div class="settings-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          </div>
+          <h2>Studium</h2>
+        </div>
+        <div class="form-group">
+          <label for="hochschule">Hochschule</label>
+          <input type="text" id="hochschule" placeholder="z.B. TU München">
+        </div>
+        <div class="form-group">
+          <label for="studiengang">Studiengang</label>
+          <input type="text" id="studiengang" placeholder="z.B. Informatik">
+        </div>
+      </div>
+
+      <!-- Persönliches Section -->
+      <div class="settings-card">
+        <div class="settings-card-header">
+          <div class="settings-icon" style="background: hsl(var(--accent) / 0.1);">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+          </div>
+          <h2>Persönliches</h2>
+        </div>
+        <div class="form-group">
+          <label for="interessen">Deine Interessen</label>
+          <textarea id="interessen" rows="2" placeholder="z.B. Sport, Musik, Reisen, Gaming..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="gluecklich">Eine Sache, die dich glücklich macht ✨</label>
+          <input type="text" id="gluecklich" placeholder="z.B. Zeit mit Freunden">
+        </div>
+      </div>
+
+      <!-- Save Button -->
+      <button class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;" id="save-profile">
+        Änderungen speichern
+      </button>
+
+      <!-- Appearance Section -->
+      <div class="settings-card">
+        <h2 style="margin-bottom: 1rem;">Erscheinungsbild</h2>
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="theme-icon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            <div>
+              <p class="title">Dark Mode</p>
+              <p class="desc" id="theme-desc">Helles Design aktiv</p>
+            </div>
+          </div>
+          <div class="toggle-switch" id="dark-mode-toggle"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/app.js"></script>
+  <script>
+    // Badge definitions
+    const BADGES = [
+      { id: "first_login", name: "Willkommen!", description: "Erster Login", icon: "star", exp: 10, color: "#eab308" },
+      { id: "week_streak", name: "Wochenläufer", description: "7 Tage hintereinander", icon: "flame", exp: 50, maxProgress: 7, color: "#f97316" },
+      { id: "month_streak", name: "Monatsmeister", description: "30 Tage hintereinander", icon: "trophy", exp: 200, maxProgress: 30, color: "#f59e0b" },
+      { id: "first_forum_post", name: "Erste Worte", description: "Erster Forumbeitrag", icon: "message", exp: 25, color: "#3b82f6" },
+      { id: "forum_regular", name: "Stammgast", description: "10 Forumbeiträge", icon: "message", exp: 100, maxProgress: 10, color: "#6366f1" },
+      { id: "mood_tracker", name: "Stimmungsforscher", description: "7 Tage getrackt", icon: "heart", exp: 50, maxProgress: 7, color: "#ec4899" },
+      { id: "mood_master", name: "Emotionsexperte", description: "30 Tage getrackt", icon: "heart", exp: 150, maxProgress: 30, color: "#f43f5e" },
+      { id: "calendar_starter", name: "Terminplaner", description: "Ersten Termin eingetragen", icon: "calendar", exp: 15, color: "#22c55e" },
+      { id: "article_reader", name: "Wissensdurstig", description: "5 Artikel gelesen", icon: "book", exp: 40, maxProgress: 5, color: "#a855f7" },
+      { id: "profile_complete", name: "Profi-Profil", description: "Profil vollständig", icon: "award", exp: 30, color: "#14b8a6" },
+      { id: "grade_planner", name: "Notenkenner", description: "Erste Note eingetragen", icon: "target", exp: 20, color: "#06b6d4" },
+      { id: "early_bird", name: "Frühaufsteher", description: "Vor 7 Uhr eingeloggt", icon: "zap", exp: 25, color: "#84cc16" },
+      { id: "first_hugo_exercise", name: "Hugos Freund", description: "Erste Übung mit Hugo", icon: "wind", exp: 20, color: "#10b981" },
+      { id: "hugo_regular", name: "Achtsamkeits-Profi", description: "10 Übungen", icon: "sparkles", exp: 75, maxProgress: 10, color: "#8b5cf6" },
+      { id: "hugo_master", name: "Coping-Meister", description: "25 Übungen", icon: "brain", exp: 150, maxProgress: 25, color: "#d946ef" },
+      { id: "hugo_all_categories", name: "Ganzheitlich", description: "Alle 4 Kategorien", icon: "award", exp: 50, maxProgress: 4, color: "#0ea5e9" },
+    ];
+
+    const ICONS = {
+      star: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+      flame: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>',
+      trophy: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>',
+      message: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>',
+      heart: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>',
+      calendar: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>',
+      book: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
+      award: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>',
+      target: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
+      zap: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
+      wind: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>',
+      sparkles: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>',
+      brain: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>',
+    };
+
+    const ProfileSettings = {
+      init() {
+        this.loadProfile();
+        this.loadBadges();
+        this.bindEvents();
+        this.initDarkMode();
+        this.checkFirstLogin();
+      },
+
+      loadProfile() {
+        const fields = ['username', 'profiltext', 'hochschule', 'studiengang', 'interessen', 'gluecklich'];
+        fields.forEach(field => {
+          const el = document.getElementById(field);
+          if (el) el.value = localStorage.getItem(field) || '';
+        });
+
+        const username = localStorage.getItem('username') || 'Student';
+        document.getElementById('profile-name').textContent = username;
+        document.getElementById('avatar-initial').textContent = username.charAt(0).toUpperCase();
+        document.getElementById('profile-school').textContent = localStorage.getItem('hochschule') || 'Dein Profil';
+
+        const profileImage = localStorage.getItem('profileImage');
+        if (profileImage) {
+          document.getElementById('avatar-img').src = profileImage;
+          document.getElementById('avatar-img').style.display = 'block';
+          document.getElementById('avatar-initial').style.display = 'none';
+        }
+      },
+
+      loadBadges() {
+        const unlockedBadges = JSON.parse(localStorage.getItem('unlockedBadges') || '{}');
+        const badgeProgress = JSON.parse(localStorage.getItem('badgeProgress') || '{}');
+        const exp = parseInt(localStorage.getItem('userExp') || '0');
+
+        // Calculate level
+        let level = 1, expNeeded = 100, totalExp = 0;
+        while (exp >= totalExp + expNeeded) {
+          totalExp += expNeeded;
+          level++;
+          expNeeded = Math.floor(expNeeded * 1.5);
+        }
+        const currentExp = exp - totalExp;
+
+        // Update level display
+        document.getElementById('level-badge').textContent = level;
+        document.getElementById('level-title').textContent = `Level ${level}`;
+        document.getElementById('level-text').textContent = `Level ${level} • ${exp} EXP`;
+        document.getElementById('exp-text').textContent = `${exp} EXP gesammelt`;
+        document.getElementById('progress-label').textContent = `Fortschritt zu Level ${level + 1}`;
+        document.getElementById('progress-exp').textContent = `${currentExp}/${expNeeded} EXP`;
+        document.getElementById('progress-fill').style.width = `${(currentExp / expNeeded) * 100}%`;
+
+        const unlockedCount = Object.keys(unlockedBadges).length;
+        document.getElementById('badge-count').textContent = `${unlockedCount}/${BADGES.length}`;
+
+        // Render badges
+        const grid = document.getElementById('badges-grid');
+        grid.innerHTML = BADGES.map(badge => {
+          const unlocked = unlockedBadges[badge.id];
+          const progress = badgeProgress[badge.id] || 0;
+          
+          return `
+            <div class="badge-card ${unlocked ? '' : 'locked'}">
+              ${unlocked ? `<div class="badge-unlocked"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>` : ''}
+              <div class="badge-icon" style="background: ${unlocked ? badge.color : 'var(--muted)'};">
+                ${ICONS[badge.icon] || ICONS.star}
+              </div>
+              <div class="badge-name">${badge.name}</div>
+              <div class="badge-desc">${badge.description}</div>
+              ${badge.maxProgress && !unlocked ? `
+                <div class="badge-progress">
+                  <div class="badge-progress-fill" style="width: ${Math.min(100, (progress / badge.maxProgress) * 100)}%; background: ${badge.color};"></div>
+                </div>
+                <div class="badge-progress-text">${progress}/${badge.maxProgress}</div>
+              ` : ''}
+              <span class="badge-exp">+${badge.exp} EXP</span>
+            </div>
+          `;
+        }).join('');
+      },
+
+      bindEvents() {
+        // Tabs
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+          });
+        });
+
+        // Save profile
+        document.getElementById('save-profile').addEventListener('click', () => {
+          const fields = ['username', 'profiltext', 'hochschule', 'studiengang', 'interessen', 'gluecklich'];
+          fields.forEach(field => {
+            localStorage.setItem(field, document.getElementById(field).value);
+          });
+
+          // Check profile complete badge
+          const username = document.getElementById('username').value;
+          const hochschule = document.getElementById('hochschule').value;
+          const studiengang = document.getElementById('studiengang').value;
+          const interessen = document.getElementById('interessen').value;
+          const gluecklich = document.getElementById('gluecklich').value;
+          const profileImage = localStorage.getItem('profileImage');
+
+          if (username && hochschule && studiengang && interessen && gluecklich && profileImage) {
+            this.unlockBadge('profile_complete');
+          }
+
+          this.loadProfile();
+          showToast('Profil gespeichert!');
+        });
+
+        // Avatar upload
+        document.getElementById('avatar-upload').addEventListener('change', (e) => {
+          const file = e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              localStorage.setItem('profileImage', reader.result);
+              document.getElementById('avatar-img').src = reader.result;
+              document.getElementById('avatar-img').style.display = 'block';
+              document.getElementById('avatar-initial').style.display = 'none';
+              showToast('Profilbild aktualisiert!');
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+
+        // Dark mode toggle
+        document.getElementById('dark-mode-toggle').addEventListener('click', () => {
+          const toggle = document.getElementById('dark-mode-toggle');
+          const isDark = toggle.classList.toggle('active');
+          document.documentElement.classList.toggle('dark', isDark);
+          localStorage.setItem('theme', isDark ? 'dark' : 'light');
+          document.getElementById('theme-desc').textContent = isDark ? 'Dunkles Design aktiv' : 'Helles Design aktiv';
+        });
+      },
+
+      initDarkMode() {
+        const isDark = localStorage.getItem('theme') === 'dark';
+        if (isDark) {
+          document.getElementById('dark-mode-toggle').classList.add('active');
+          document.documentElement.classList.add('dark');
+          document.getElementById('theme-desc').textContent = 'Dunkles Design aktiv';
+        }
+      },
+
+      checkFirstLogin() {
+        if (!localStorage.getItem('hasVisitedProfile')) {
+          localStorage.setItem('hasVisitedProfile', 'true');
+          this.unlockBadge('first_login');
+          showToast('🎉 Badge freigeschaltet: Willkommen! +10 EXP');
+        }
+      },
+
+      unlockBadge(badgeId) {
+        const unlockedBadges = JSON.parse(localStorage.getItem('unlockedBadges') || '{}');
+        if (unlockedBadges[badgeId]) return false;
+
+        unlockedBadges[badgeId] = true;
+        localStorage.setItem('unlockedBadges', JSON.stringify(unlockedBadges));
+
+        const badge = BADGES.find(b => b.id === badgeId);
+        if (badge) {
+          const currentExp = parseInt(localStorage.getItem('userExp') || '0');
+          localStorage.setItem('userExp', String(currentExp + badge.exp));
+        }
+
+        this.loadBadges();
+        return true;
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      ProfileSettings.init();
+    });
+  </script>
+</body>
+</html>
