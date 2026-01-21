@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Campus Hugo - Dein Begleiter für mentale Gesundheit im Studium">
+  <title>Campus Hugo</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="assets/sloth-icon.png">
+</head>
+<body>
+  <!-- ===== HEADER ===== -->
+  <header class="header" id="main-header">
+    <div class="header-inner">
+      <a href="#" class="header-logo" onclick="navigateTo('landing'); return false;">
+        <img src="assets/sloth-icon.png" alt="Logo">
+        <div class="header-logo-text">
+          <span class="header-logo-title">Campus Hugo</span>
+        </div>
+      </a>
+      
+      <!-- Search (only visible when logged in) -->
+      <div class="header-search" id="header-search">
+        <svg class="header-search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" placeholder="User, Mentoren, Berater, Funktionen..." id="search-input">
+        <div class="search-results" id="search-results"></div>
+      </div>
+      
+      <button class="menu-btn" aria-label="Menü öffnen" onclick="toggleMenu()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+  
+  <!-- Menu Overlay -->
+  <div class="menu-overlay" id="menu-overlay" onclick="toggleMenu()"></div>
+  <div class="menu-dropdown" id="menu-dropdown">
+    <nav id="menu-nav">
+      <!-- Menu items populated by JS based on auth state -->
+    </nav>
+  </div>
+
+  <!-- ===== PAGES ===== -->
+  
+  <!-- LANDING PAGE -->
+  <main class="page" id="page-landing">
+    <section class="hero">
+      <img src="assets/sloth-mascot.png" alt="Hugo das Faultier" class="hero-mascot">
+      <h1>Dein Begleiter für <span>mentale Gesundheit</span> im Studium</h1>
+      <p>Campus Hugo bietet dir Unterstützung, Community und praktische Tools für dein Wohlbefinden – anonym, kostenlos und immer für dich da.</p>
+      <div class="hero-buttons">
+        <button class="btn btn-primary btn-lg" onclick="navigateTo('registrierung')">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+          Kostenlos starten
+        </button>
+        <button class="btn btn-outline btn-lg" onclick="enterGuestMode()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+          Als Gast ansehen
+        </button>
+      </div>
+    </section>
+    
+    <section class="features">
+      <div class="page-container">
+        <div class="features-header">
+          <h2>Alles was du brauchst</h2>
+          <p>Tools und Community für dein Studium – entwickelt von Studierenden für Studierende.</p>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+            </div>
+            <h3>Community Forum</h3>
+            <p>Tausche dich anonym mit anderen Studierenden aus und finde Unterstützung in schwierigen Zeiten.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+            </div>
+            <h3>Mood-Tracking</h3>
+            <p>Verfolge deine Stimmung über Zeit und erkenne Muster – mit persönlichen Insights und Tipps.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+            </div>
+            <h3>Professionelle Beratung</h3>
+            <p>Verbinde dich mit ausgebildeten Beratern und Mentoren, die dich verstehen und unterstützen.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="cta">
+      <h2>Bereit für mehr Wohlbefinden?</h2>
+      <p>Starte jetzt kostenlos und entdecke alle Features von Campus Hugo.</p>
+      <button class="btn btn-primary btn-lg" onclick="navigateTo('registrierung')">Jetzt registrieren</button>
+    </section>
+    
+    <footer class="footer">
+      <a href="#" onclick="navigateTo('impressum'); return false;">Impressum</a>
+    </footer>
+  </main>
+
+  <!-- LOGIN PAGE -->
+  <main class="page" id="page-login">
+    <div class="auth-page">
+      <div class="auth-card">
+        <div class="auth-header">
+          <img src="assets/sloth-mascot.png" alt="Hugo">
+          <h1>Willkommen zurück!</h1>
+          <p>Melde dich an, um fortzufahren</p>
+        </div>
+        
+        <form id="login-form" onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label class="form-label" for="login-email">E-Mail</label>
+            <div class="form-input-icon">
+              <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              <input type="email" id="login-email" class="form-input" placeholder="deine@email.de" required>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="login-password">Passwort</label>
+            <div class="form-input-icon">
+              <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <input type="password" id="login-password" class="form-input" placeholder="••••••••" required>
+              <svg class="icon icon-right toggle-password" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" onclick="togglePasswordVisibility('login-password', this)"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+          </div>
+          
+          <button type="submit" class="btn btn-primary w-full">Anmelden</button>
+        </form>
+        
+        <div class="auth-footer">
+          <p>Noch kein Konto? <a href="#" onclick="navigateTo('registrierung'); return false;">Jetzt registrieren</a></p>
+          <p style="margin-top: 0.5rem;"><a href="#" onclick="enterGuestMode(); return false;">Als Gast fortfahren →</a></p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- REGISTRATION PAGE -->
+  <main class="page" id="page-registrierung">
+    <div class="auth-page">
+      <div class="auth-card">
+        <div class="progress-steps" id="reg-progress">
+          <div class="progress-step active"></div>
+          <div class="progress-step"></div>
+          <div class="progress-step"></div>
+          <div class="progress-step"></div>
+        </div>
+        
+        <!-- Step 1: Account -->
+        <div class="reg-step active" data-step="1">
+          <div class="auth-header">
+            <img src="assets/sloth-mascot.png" alt="Hugo">
+            <h1>Erstelle dein Konto</h1>
+            <p>Schritt 1 von 4</p>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="reg-email">E-Mail</label>
+            <div class="form-input-icon">
+              <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              <input type="email" id="reg-email" class="form-input" placeholder="deine@email.de">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="reg-password">Passwort</label>
+            <div class="form-input-icon">
+              <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <input type="password" id="reg-password" class="form-input" placeholder="Mindestens 6 Zeichen">
+              <svg class="icon icon-right toggle-password" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" onclick="togglePasswordVisibility('reg-password', this)"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+          </div>
+          
+          <button type="button" class="btn btn-primary w-full" onclick="nextRegStep()">Weiter</button>
+        </div>
+        
+        <!-- Step 2: Name -->
+        <div class="reg-step" data-step="2">
+          <div class="auth-header">
+            <h1>Wie heißt du?</h1>
+            <p>Schritt 2 von 4</p>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="reg-username">Dein Name oder Nickname</label>
+            <div class="form-input-icon">
+              <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <input type="text" id="reg-username" class="form-input" placeholder="z.B. Max oder MaxMuster">
+            </div>
+          </div>
+          
+          <div class="flex gap-2">
+            <button type="button" class="btn btn-outline" onclick="prevRegStep()">Zurück</button>
+            <button type="button" class="btn btn-primary" style="flex: 1;" onclick="nextRegStep()">Weiter</button>
+          </div>
+        </div>
+        
+        <!-- Step 3: Study -->
+        <div class="reg-step" data-step="3">
+          <div class="auth-header">
+            <h1>Was studierst du?</h1>
+            <p>Schritt 3 von 4 (optional)</p>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="reg-studiengang">Studiengang</label>
+            <input type="text" id="reg-studiengang" class="form-input" placeholder="z.B. Informatik, BWL...">
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="reg-hochschule">Hochschule</label>
+            <input type="text" id="reg-hochschule" class="form-input" placeholder="z.B. TU München...">
+          </div>
+          
+          <div class="flex gap-2">
+            <button type="button" class="btn btn-outline" onclick="prevRegStep()">Zurück</button>
+            <button type="button" class="btn btn-primary" style="flex: 1;" onclick="nextRegStep()">Weiter</button>
+          </div>
+        </div>
+        
+        <!-- Step 4: Personal -->
+        <div class="reg-step" data-step="4">
+          <div class="auth-header">
+            <h1>Fast geschafft!</h1>
+            <p>Schritt 4 von 4 (optional)</p>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="reg-interessen">Was interessiert dich?</label>
+            <textarea id="reg-interessen" class="form-input" rows="2" placeholder="Hobbys, Themen..."></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="reg-gluecklich">Was macht dich glücklich?</label>
+            <textarea id="reg-gluecklich" class="form-input" rows="2" placeholder="Kleine oder große Dinge..."></textarea>
+          </div>
+          
+          <div class="flex gap-2">
+            <button type="button" class="btn btn-outline" onclick="prevRegStep()">Zurück</button>
+            <button type="button" class="btn btn-primary" style="flex: 1;" onclick="finishRegistration()">Los geht's! 🚀</button>
+          </div>
+        </div>
+        
+        <div class="auth-footer">
+          <p>Bereits registriert? <a href="#" onclick="navigateTo('login'); return false;">Anmelden</a></p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- DASHBOARD PAGE -->
+  <main class="page" id="page-dashboard">
+    <!-- Hero Section -->
+    <div class="dashboard-hero">
+      <div class="page-container">
+        <div class="dashboard-hero-inner">
+          <div class="dashboard-welcome">
+            <p id="welcome-text">Willkommen zurück,</p>
+            <h1 id="dashboard-username">UserX</h1>
+          </div>
+          
+          <!-- Desktop Mascot -->
+          <img src="assets/hugo-mascot.png" alt="Hugo - Klicke für deinen Coping-Plan" class="dashboard-mascot" onclick="openDialog('coping-dialog')">
+          
+          <!-- Mobile Mascot -->
+          <img src="assets/hugo-mascot.png" alt="Hugo" class="dashboard-mascot-mobile" onclick="openDialog('coping-dialog')">
+        </div>
+      </div>
+    </div>
+
+    <div class="page-container space-y-8" style="padding-bottom: 3rem;">
+      
+      <!-- Guest CTA -->
+      <div id="guest-cta" class="guest-cta" style="display: none;">
+        <div class="card" style="background: linear-gradient(135deg, hsl(161 93% 30% / 0.1), hsl(161 93% 30% / 0.05)); border: 1px solid hsl(161 93% 30% / 0.2);">
+          <h3 style="color: var(--primary); margin-bottom: 0.5rem;">👋 Du bist im Gastmodus</h3>
+          <p style="margin-bottom: 1rem; color: var(--muted-foreground);">Registriere dich kostenlos, um alle Funktionen zu nutzen und deine Daten zu speichern.</p>
+          <div class="flex gap-2">
+            <button class="btn btn-primary" onclick="navigateTo('registrierung')">Registrieren</button>
+            <button class="btn btn-outline" onclick="navigateTo('login')">Anmelden</button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Quick Access -->
+      <section class="animate-fade-in">
+        <div class="section-header">
+          <h2>Schnellzugriff</h2>
+        </div>
+        <div class="quick-access">
+          <div class="quick-card" onclick="openDialog('coping-dialog')">
+            <div class="quick-card-icon" style="background: hsl(161 93% 30% / 0.15);">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+            </div>
+            <h4>Coping Begleiter</h4>
+            <p>Hugo hilft dir</p>
+          </div>
+          <a href="#" class="quick-card" onclick="navigateTo('forum'); return false;">
+            <div class="quick-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+            </div>
+            <h4>Forum</h4>
+            <p>Community</p>
+          </a>
+          <a href="#" class="quick-card" onclick="navigateTo('berater'); return false;">
+            <div class="quick-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h4>Beratung</h4>
+            <p>Unterstützung</p>
+          </a>
+          <a href="#" class="quick-card" onclick="navigateTo('notenplaner'); return false;">
+            <div class="quick-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/></svg>
+            </div>
+            <h4>Notenplaner</h4>
+            <p>Noten verwalten</p>
+          </a>
+          <a href="#" class="quick-card" onclick="navigateTo('artikel'); return false;">
+            <div class="quick-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            </div>
+            <h4>Wissen</h4>
+            <p>Tipps & Artikel</p>
+          </a>
+          <a href="#" class="quick-card guest-lockable" onclick="navigateTo('einstellungen'); return false;">
+            <div class="quick-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <h4>Dein Profil</h4>
+            <p>Einstellungen</p>
+          </a>
+        </div>
+      </section>
+
+      <!-- Self-Management Tools -->
+      <section class="animate-fade-in mood-section" style="animation-delay: 200ms;">
+        <div class="section-header flex justify-between items-center">
+          <h2>Dein Wohlbefinden</h2>
+          <div class="view-toggle">
+            <button class="view-toggle-btn active" id="toggle-calendar" onclick="toggleView('calendar')">Kalender</button>
+            <button class="view-toggle-btn" id="toggle-stundenplan" onclick="toggleView('stundenplan')">Stundenplan</button>
+          </div>
+        </div>
+        
+        <div class="mood-grid">
+          <!-- Calendar View -->
+          <div class="calendar-card" id="calendar-view">
+            <div class="calendar-header">
+              <h3 class="calendar-month-year" id="calendar-month-year">Januar 2025</h3>
+              <div class="calendar-nav">
+                <button class="calendar-prev" onclick="changeCalendarMonth(-1)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+                </button>
+                <button class="calendar-next" onclick="changeCalendarMonth(1)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="calendar-weekdays">
+              <div class="calendar-weekday">Mo</div>
+              <div class="calendar-weekday">Di</div>
+              <div class="calendar-weekday">Mi</div>
+              <div class="calendar-weekday">Do</div>
+              <div class="calendar-weekday">Fr</div>
+              <div class="calendar-weekday">Sa</div>
+              <div class="calendar-weekday">So</div>
+            </div>
+            <div class="calendar-days" id="calendar-days"></div>
+            
+            <div class="mood-legend">
+              <div class="mood-legend-item"><div class="mood-legend-dot" style="background: var(--mood-great);"></div><span>Sehr gut</span></div>
+              <div class="mood-legend-item"><div class="mood-legend-dot" style="background: var(--mood-good);"></div><span>Gut</span></div>
+              <div class="mood-legend-item"><div class="mood-legend-dot" style="background: var(--mood-neutral);"></div><span>Neutral</span></div>
+              <div class="mood-legend-item"><div class="mood-legend-dot" style="background: var(--mood-unwell);"></div><span>Unwohl</span></div>
+              <div class="mood-legend-item"><div class="mood-legend-dot" style="background: var(--mood-bad);"></div><span>Schlecht</span></div>
+            </div>
+          </div>
+          
+          <!-- Stundenplan View (hidden by default) -->
+          <div class="calendar-card" id="stundenplan-view" style="display: none;">
+            <div class="calendar-header">
+              <h3>Stundenplan</h3>
+              <button class="btn btn-outline" onclick="openDialog('stundenplan-dialog')" style="padding: 0.5rem 1rem; font-size: 0.875rem;">+ Neu</button>
+            </div>
+            <div id="stundenplan-content"></div>
+          </div>
+
+          <!-- Mood Chart -->
+          <div class="mood-chart-card">
+            <div class="mood-chart-header">
+              <h3>Stimmungsverlauf</h3>
+            </div>
+            <div class="mood-chart" id="mood-chart"></div>
+            <div class="mood-chart-labels">
+              <span>Mo</span><span>Di</span><span>Mi</span><span>Do</span><span>Fr</span><span>Sa</span><span>So</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Mentors -->
+      <section class="animate-fade-in" style="animation-delay: 300ms;">
+        <div class="section-header">
+          <h2>Mentoren</h2>
+        </div>
+        <div class="mentors-carousel">
+          <div class="mentor-card">
+            <img src="assets/martina-mentor.png" alt="Martina" class="mentor-image">
+            <div class="mentor-content">
+              <h4 class="mentor-name">Martina</h4>
+              <p class="mentor-field">Stressmanagement</p>
+              <p class="mentor-desc">Expertin für Prüfungsangst und Stressbewältigung im Studium.</p>
+            </div>
+          </div>
+          <div class="mentor-card">
+            <img src="assets/oliver-mentor.png" alt="Oliver" class="mentor-image">
+            <div class="mentor-content">
+              <h4 class="mentor-name">Oliver</h4>
+              <p class="mentor-field">Zeitmanagement</p>
+              <p class="mentor-desc">Hilft dir bei Motivation und effektiver Zeitplanung.</p>
+            </div>
+          </div>
+          <div class="mentor-card">
+            <img src="assets/sarah-mentor.png" alt="Sarah" class="mentor-image">
+            <div class="mentor-content">
+              <h4 class="mentor-name">Sarah</h4>
+              <p class="mentor-field">Work-Life-Balance</p>
+              <p class="mentor-desc">Spezialistin für Selbstfürsorge und Balance im Alltag.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="page-container py-6">
+      <div class="disclaimer">
+        <p><strong>Hinweis:</strong> Diese App ersetzt keine professionelle psychologische oder medizinische Beratung. Bei akuten Krisen wende dich bitte an die <a href="tel:0800-1110111">Telefonseelsorge (0800 111 0 111)</a> oder suche professionelle Hilfe.</p>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <a href="#" onclick="navigateTo('impressum'); return false;">Impressum</a>
+    </footer>
+  </main>
+
+  <!-- FORUM PAGE -->
+  <main class="page" id="page-forum">
+    <div class="page-container py-6">
+      <div class="page-header">
+        <h1>Community Forum</h1>
+        <p>Tausche dich mit anderen Studierenden aus</p>
+      </div>
+      
+      <div class="forum-layout">
+        <!-- Sidebar -->
+        <aside class="forum-sidebar">
+          <div class="sidebar-section">
+            <h3>Kategorien</h3>
+            <div class="category-list">
+              <button class="category-btn active" onclick="filterPosts('alle')">Alle Beiträge</button>
+              <button class="category-btn" onclick="filterPosts('allgemein')">Allgemein</button>
+              <button class="category-btn" onclick="filterPosts('stress')">Stress & Prüfungen</button>
+              <button class="category-btn" onclick="filterPosts('motivation')">Motivation</button>
+              <button class="category-btn" onclick="filterPosts('tipps')">Tipps & Tricks</button>
+            </div>
+          </div>
+        </aside>
+        
+        <!-- Posts -->
+        <div class="forum-main">
+          <button class="btn btn-primary w-full mb-4 guest-lockable" onclick="openDialog('new-post-dialog')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            Neuen Beitrag erstellen
+          </button>
+          
+          <div id="forum-posts"></div>
+        </div>
+      </div>
+    </div>
+    
+    <footer class="footer">
+      <a href="#" onclick="navigateTo('impressum'); return false;">Impressum</a>
+    </footer>
+  </main>
+
+  <!-- BERATER PAGE -->
+  <main class="page" id="page-berater">
+    <div class="page-container py-6">
+      <div class="page-header">
+        <div class="page-header-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+        </div>
+        <div>
+          <h1>Beratung & Unterstützung</h1>
+          <p>Finde die richtige Hilfe für dich</p>
+        </div>
+      </div>
+      
+      <!-- Info Cards -->
+      <div class="info-cards">
+        <div class="info-card">
+          <div class="info-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <h3>Telefonseelsorge</h3>
+          <p>0800 111 0 111 (kostenlos, 24/7)</p>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+          </div>
+          <h3>Termine</h3>
+          <p>Buche direkt online</p>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+          </div>
+          <h3>Chat</h3>
+          <p>Schreibe uns direkt</p>
+        </div>
+      </div>
+      
+      <!-- Berater List -->
+      <h2 class="section-title">Unsere Berater</h2>
+      <div class="berater-grid" id="berater-list"></div>
+    </div>
+    
+    <footer class="footer">
+      <a href="#" onclick="navigateTo('impressum'); return false;">Impressum</a>
+    </footer>
+  </main>
+
+  <!-- NOTENPLANER PAGE -->
+  <main class="page" id="page-notenplaner">
+    <div class="page-container py-6">
+      <div class="page-header">
+        <div class="page-header-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/></svg>
+        </div>
+        <div>
+          <h1>Notenplaner</h1>
+          <p>Verwalte deine Noten und ECTS</p>
+        </div>
+      </div>
+      
+      <button class="btn btn-primary mb-4 guest-lockable" onclick="openDialog('grade-dialog')">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        Note hinzufügen
+      </button>
+      
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value" id="avg-grade">-</div>
+          <div class="stat-label">Notendurchschnitt</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="total-ects">0</div>
+          <div class="stat-label">ECTS erreicht</div>
+        </div>
+      </div>
+      
+      <!-- Grades by Semester -->
+      <div id="grades-list"></div>
+    </div>
+    
+    <footer class="footer">
+      <a href="#" onclick="navigateTo('impressum'); return false;">Impressum</a>
+    </footer>
+  </main>
+
+  <!-- ARTIKEL PAGE -->
+  <main class="page" id="page-artikel">
+    <div class="page-container py-6">
+      <div class="page-header">
+        <h1>Wissen & Tipps</h1>
+        <p>Hilfreiche Artikel für dein Studium</p>
+      </div>
+      
+      <!-- Filter -->
+      <div class="article-filter" id="article-filter">
+        <button class="filter-btn active" data-category="Alle">Alle</button>
+        <button class="filter-btn" data-category="Produktivität">Produktivität</button>
+        <button class="filter-btn" data-category="Gesundheit">Gesundheit</button>
+        <button class="filter-btn" data-category="Motivation">Motivation</button>
+        <button class="filter-btn" data-category="Lernen">Lernen</button>
+      </div>
+      
+      <!-- Articles Grid -->
+      <div class="articles-grid" id="articles-list"></div>
+    </div>
+    
+    <footer class="footer">
+      <a href="#" onclick="navigateTo('impressum'); return false;">Impressum</a>
+    </footer>
+  </main>
+
+  <!-- ARTIKEL DETAIL PAGE -->
+  <main class="page" id="page-artikel-detail">
+    <div class="page-container py-6">
+      <a href="#" class="back-link" onclick="navigateTo('artikel'); return false;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+        Zurück zu Artikel
+      </a>
+      
+      <article id="article-content"></article>
+    </div>
+    
+    <footer class="footer">
+      <a href="#" onclick="navigateTo('impressum'); return false;">Impressum</a>
+    </footer>
+  </main>
+
+  <!-- EINSTELLUNGEN PAGE -->
+  <main class="page" id="page-einstellungen">
+    <div class="page-container py-6" style="max-width: 42rem;">
+      <div class="profile-header">
+        <div class="profile-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+        </div>
+        <div>
+          <h1>Dein Profil</h1>
+          <p id="settings-level">Level 1 • 0 EXP</p>
+        </div>
+      </div>
+      
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchSettingsTab('badges')">🏆 Badges</button>
+        <button class="tab-btn" onclick="switchSettingsTab('profile')">⚙️ Einstellungen</button>
+      </div>
+      
+      <!-- Badges Tab -->
+      <div class="settings-tab-content" id="tab-badges">
+        <!-- Level Card -->
+        <div class="level-card">
+          <div class="level-header">
+            <div class="level-info">
+              <div class="level-badge" id="level-badge">1</div>
+              <div class="level-text">
+                <h3 id="level-title">Neuling</h3>
+                <p id="level-exp">0 / 100 EXP</p>
+              </div>
+            </div>
+            <div class="level-stats">
+              <div class="count" id="unlocked-badges-count">0</div>
+              <div class="label">Badges</div>
+            </div>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="level-progress" style="width: 0%;"></div>
+          </div>
+        </div>
+        
+        <!-- Badges Grid -->
+        <div class="badges-section">
+          <h3>🏆 Deine Badges</h3>
+          <div class="badges-grid" id="badges-grid"></div>
+        </div>
+      </div>
+      
+      <!-- Profile Tab -->
+      <div class="settings-tab-content" id="tab-profile" style="display: none;">
+        <div class="settings-card">
+          <div class="avatar-section">
+            <div class="avatar" id="profile-avatar">
+              <span id="avatar-initials">U</span>
+            </div>
+            <div class="avatar-info">
+              <h3 id="profile-name">Username</h3>
+              <p id="profile-study">Studiengang</p>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" id="settings-name" class="form-input" placeholder="Dein Name">
+          </div>
+          
+          <div class="form-group">
+            <label>Hochschule</label>
+            <input type="text" id="settings-hochschule" class="form-input" placeholder="Deine Hochschule">
+          </div>
+          
+          <div class="form-group">
+            <label>Studiengang</label>
+            <input type="text" id="settings-studiengang" class="form-input" placeholder="Dein Studiengang">
+          </div>
+          
+          <div class="form-group">
+            <label>Über mich</label>
+            <textarea id="settings-bio" class="form-input" rows="3" placeholder="Erzähl etwas über dich..."></textarea>
+          </div>
+          
+          <button class="btn btn-primary w-full" onclick="saveProfile()">Profil speichern</button>
+        </div>
+        
+        <div class="settings-card">
+          <h3 style="margin-bottom: 1rem;">Darstellung</h3>
+          <div class="toggle-row">
+            <div class="toggle-info">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+              <div>
+                <div class="title">Dark Mode</div>
+                <div class="desc">Dunkles Erscheinungsbild</div>
+              </div>
+            </div>
+            <div class="toggle-switch" id="dark-mode-toggle" onclick="toggleDarkMode()"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <footer class="footer">
+      <a href="#" onclick="navigateTo('impressum'); return false;">Impressum</a>
+    </footer>
+  </main>
+
+  <!-- IMPRESSUM PAGE -->
+  <main class="page" id="page-impressum">
+    <div class="page-container py-6" style="max-width: 42rem;">
+      <a href="#" class="back-link" onclick="navigateTo('landing'); return false;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+        Zurück zur Startseite
+      </a>
+      
+      <h1 style="margin: 2rem 0 1rem;">Impressum</h1>
+      
+      <div class="card mb-4">
+        <h3>Angaben gemäß § 5 TMG</h3>
+        <p style="margin-top: 0.5rem; color: var(--muted-foreground);">
+          Campus Hugo<br>
+          Musterstraße 123<br>
+          12345 Musterstadt<br>
+          Deutschland
+        </p>
+      </div>
+      
+      <div class="card mb-4">
+        <h3>Kontakt</h3>
+        <p style="margin-top: 0.5rem; color: var(--muted-foreground);">
+          E-Mail: info@campus-hugo.de<br>
+          Telefon: +49 (0) 123 456 789
+        </p>
+      </div>
+      
+      <div class="card mb-4">
+        <h3>Verantwortlich für den Inhalt</h3>
+        <p style="margin-top: 0.5rem; color: var(--muted-foreground);">
+          Max Mustermann<br>
+          Musterstraße 123<br>
+          12345 Musterstadt
+        </p>
+      </div>
+      
+      <div class="card">
+        <h3>Haftungsausschluss</h3>
+        <p style="margin-top: 0.5rem; color: var(--muted-foreground);">
+          Die Inhalte dieser App wurden mit größtmöglicher Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Diese App ersetzt keine professionelle psychologische oder medizinische Beratung.
+        </p>
+      </div>
+    </div>
+    
+    <footer class="footer">
+      <p style="color: var(--muted-foreground); font-size: 0.875rem;">© 2025 Campus Hugo</p>
+    </footer>
+  </main>
+
+  <!-- ===== DIALOGS ===== -->
+  <div class="dialog-overlay" id="dialog-overlay" onclick="closeAllDialogs()"></div>
+  
+  <!-- Mood Dialog -->
+  <div class="dialog" id="mood-dialog" style="overflow: visible;">
+    <img src="assets/sloth-mascot.png" alt="Hugo" class="mood-dialog-mascot">
+    <div class="dialog-content" style="padding-top: 1.5rem;">
+      <p style="color: var(--muted-foreground); font-size: 0.875rem; margin-bottom: 0.25rem;">Willkommen!</p>
+      <h2 style="color: var(--primary); margin-bottom: 2rem; font-size: 1.75rem;">Wie fühlst du dich heute?</h2>
+      
+      <div class="mood-options">
+        <button class="mood-option" onclick="selectMood('bad')">
+          <div class="mood-emoji" style="background: var(--mood-bad);">😢</div>
+          <span class="mood-label">schlecht</span>
+        </button>
+        <button class="mood-option" onclick="selectMood('unwell')">
+          <div class="mood-emoji" style="background: var(--mood-unwell);">😟</div>
+          <span class="mood-label">unwohl</span>
+        </button>
+        <button class="mood-option" onclick="selectMood('neutral')">
+          <div class="mood-emoji" style="background: var(--mood-neutral);">😐</div>
+          <span class="mood-label">neutral</span>
+        </button>
+        <button class="mood-option" onclick="selectMood('good')">
+          <div class="mood-emoji" style="background: var(--mood-good);">🙂</div>
+          <span class="mood-label">gut</span>
+        </button>
+        <button class="mood-option" onclick="selectMood('great')">
+          <div class="mood-emoji" style="background: var(--mood-great);">😆</div>
+          <span class="mood-label">sehr gut</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Coping Dialog -->
+  <div class="dialog" id="coping-dialog">
+    <button class="dialog-close" onclick="closeDialog('coping-dialog')">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+    <div class="dialog-content">
+      <h2 style="margin-bottom: 1rem;">🦥 Hugos Coping-Plan</h2>
+      <p style="color: var(--muted-foreground); margin-bottom: 1.5rem;">Wähle ein Thema, das dich gerade beschäftigt:</p>
+      
+      <div class="coping-categories" id="coping-categories">
+        <button class="coping-category" onclick="showCopingExercises('stress')">
+          <span class="coping-icon">🔥</span>
+          <span>Stress</span>
+        </button>
+        <button class="coping-category" onclick="showCopingExercises('angst')">
+          <span class="coping-icon">💜</span>
+          <span>Angst</span>
+        </button>
+        <button class="coping-category" onclick="showCopingExercises('einsamkeit')">
+          <span class="coping-icon">👥</span>
+          <span>Einsamkeit</span>
+        </button>
+        <button class="coping-category" onclick="showCopingExercises('ueberforderung')">
+          <span class="coping-icon">🧠</span>
+          <span>Überforderung</span>
+        </button>
+      </div>
+      
+      <div id="coping-exercises" style="display: none;"></div>
+    </div>
+  </div>
+
+  <!-- Stundenplan Dialog -->
+  <div class="dialog" id="stundenplan-dialog">
+    <button class="dialog-close" onclick="closeDialog('stundenplan-dialog')">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+    <div class="dialog-content">
+      <h2 style="margin-bottom: 1.5rem;">Neuer Eintrag</h2>
+      
+      <div class="form-group">
+        <label>Fach / Veranstaltung</label>
+        <input type="text" id="sp-subject" class="form-input" placeholder="z.B. Mathe I">
+      </div>
+      
+      <div class="form-group">
+        <label>Tag</label>
+        <select id="sp-day" class="form-input">
+          <option value="Mo">Montag</option>
+          <option value="Di">Dienstag</option>
+          <option value="Mi">Mittwoch</option>
+          <option value="Do">Donnerstag</option>
+          <option value="Fr">Freitag</option>
+        </select>
+      </div>
+      
+      <div class="flex gap-2">
+        <div class="form-group" style="flex: 1;">
+          <label>Von</label>
+          <input type="time" id="sp-start" class="form-input" value="08:00">
+        </div>
+        <div class="form-group" style="flex: 1;">
+          <label>Bis</label>
+          <input type="time" id="sp-end" class="form-input" value="10:00">
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>Raum (optional)</label>
+        <input type="text" id="sp-room" class="form-input" placeholder="z.B. R 1.234">
+      </div>
+      
+      <div class="form-group">
+        <label>Farbe</label>
+        <div class="color-picker" id="sp-colors">
+          <button class="color-option active" data-color="primary" style="background: var(--primary);"></button>
+          <button class="color-option" data-color="blue" style="background: hsl(210 90% 50%);"></button>
+          <button class="color-option" data-color="purple" style="background: hsl(270 70% 50%);"></button>
+          <button class="color-option" data-color="orange" style="background: hsl(25 90% 50%);"></button>
+          <button class="color-option" data-color="pink" style="background: hsl(330 80% 60%);"></button>
+        </div>
+      </div>
+      
+      <button class="btn btn-primary w-full" onclick="addStundenplanEntry()">Hinzufügen</button>
+    </div>
+  </div>
+
+  <!-- Grade Dialog -->
+  <div class="dialog" id="grade-dialog">
+    <button class="dialog-close" onclick="closeDialog('grade-dialog')">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+    <div class="dialog-content">
+      <h2 id="grade-dialog-title" style="margin-bottom: 1.5rem;">Note hinzufügen</h2>
+      
+      <div class="form-group">
+        <label>Fach</label>
+        <input type="text" id="grade-subject" class="form-input" placeholder="z.B. Mathematik I">
+      </div>
+      
+      <div class="flex gap-2">
+        <div class="form-group" style="flex: 1;">
+          <label>Note</label>
+          <input type="number" id="grade-value" class="form-input" step="0.1" min="1.0" max="5.0" placeholder="1.0 - 5.0">
+        </div>
+        <div class="form-group" style="flex: 1;">
+          <label>ECTS</label>
+          <input type="number" id="grade-ects" class="form-input" min="1" max="30" placeholder="z.B. 5">
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>Semester</label>
+        <input type="text" id="grade-semester" class="form-input" placeholder="z.B. WS 2024/25">
+      </div>
+      
+      <input type="hidden" id="grade-edit-id">
+      <button class="btn btn-primary w-full" onclick="saveGrade()">Speichern</button>
+    </div>
+  </div>
+
+  <!-- New Post Dialog -->
+  <div class="dialog" id="new-post-dialog">
+    <button class="dialog-close" onclick="closeDialog('new-post-dialog')">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+    <div class="dialog-content">
+      <h2 style="margin-bottom: 1.5rem;">Neuer Beitrag</h2>
+      
+      <div class="form-group">
+        <label>Kategorie</label>
+        <select id="post-category" class="form-input">
+          <option value="allgemein">Allgemein</option>
+          <option value="stress">Stress & Prüfungen</option>
+          <option value="motivation">Motivation</option>
+          <option value="tipps">Tipps & Tricks</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label>Titel</label>
+        <input type="text" id="post-title" class="form-input" placeholder="Worum geht es?">
+      </div>
+      
+      <div class="form-group">
+        <label>Inhalt</label>
+        <textarea id="post-content" class="form-input" rows="5" placeholder="Teile deine Gedanken..."></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label class="flex items-center gap-2">
+          <input type="checkbox" id="post-anonymous">
+          <span>Anonym posten</span>
+        </label>
+      </div>
+      
+      <button class="btn btn-primary w-full" onclick="createForumPost()">Veröffentlichen</button>
+    </div>
+  </div>
+
+  <!-- Berater Chat Dialog -->
+  <div class="dialog" id="berater-chat-dialog" style="max-width: 28rem;">
+    <button class="dialog-close" onclick="closeDialog('berater-chat-dialog')">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+    <div class="dialog-content" style="padding: 0;">
+      <div class="chat-header" id="chat-header">
+        <img src="" alt="" id="chat-berater-img">
+        <div>
+          <h3 id="chat-berater-name">Berater</h3>
+          <span class="status-online">Online</span>
+        </div>
+      </div>
+      <div class="chat-messages" id="chat-messages"></div>
+      <div class="chat-input">
+        <input type="text" id="chat-input" placeholder="Nachricht schreiben..." onkeypress="if(event.key==='Enter')sendChatMessage()">
+        <button class="btn btn-primary" onclick="sendChatMessage()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
