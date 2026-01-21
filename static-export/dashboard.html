@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Dein Dashboard - Campus Hugo">
+  <title>Dashboard - Campus Hugo</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="assets/sloth-icon.png">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="dashboard.html" class="header-logo">
+        <img src="assets/sloth-icon.png" alt="Logo">
+        <div class="header-logo-text">
+          <span class="header-logo-title">Campus Hugo</span>
+        </div>
+      </a>
+      
+      <!-- Search -->
+      <div class="header-search">
+        <svg class="header-search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" placeholder="User, Mentoren, Berater, Funktionen...">
+      </div>
+      
+      <button class="menu-btn" aria-label="Menü öffnen">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+  
+  <!-- Menu Overlay -->
+  <div class="menu-overlay"></div>
+  <div class="menu-dropdown">
+    <nav>
+      <a href="dashboard.html">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Home
+      </a>
+      <a href="forum.html">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+        Forum
+      </a>
+      <a href="berater.html">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Beratung
+      </a>
+      <a href="notenplaner.html">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg>
+        Notenplaner
+      </a>
+      <a href="artikel.html">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Wissen
+      </a>
+      <a href="einstellungen.html">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+        Dein Profil
+      </a>
+      <div class="menu-divider"></div>
+      <a href="index.html" class="accent-link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+        Log Out
+      </a>
+    </nav>
+  </div>
+
+  <main>
+    <!-- Hero Section -->
+    <div class="dashboard-hero">
+      <div class="page-container">
+        <div class="dashboard-hero-inner">
+          <div class="dashboard-welcome">
+            <p>Willkommen zurück,</p>
+            <h1 class="dashboard-username">UserX</h1>
+          </div>
+          
+          <!-- Desktop Mascot -->
+          <img src="assets/hugo-mascot.png" alt="Hugo - Klicke für deinen Coping-Plan" class="dashboard-mascot">
+          
+          <!-- Mobile Mascot -->
+          <img src="assets/hugo-mascot.png" alt="Hugo" class="dashboard-mascot-mobile">
+        </div>
+      </div>
+    </div>
+
+    <div class="page-container space-y-8" style="padding-bottom: 3rem;">
+      
+      <!-- Quick Access -->
+      <section class="animate-fade-in">
+        <div class="section-header">
+          <h2>Schnellzugriff</h2>
+        </div>
+        <div class="quick-access">
+          <a href="forum.html" class="quick-card">
+            <div class="quick-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+            </div>
+            <h4>Forum</h4>
+            <p>Community</p>
+          </a>
+          <a href="berater.html" class="quick-card">
+            <div class="quick-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+            </div>
+            <h4>Beratung</h4>
+            <p>Unterstützung</p>
+          </a>
+          <a href="notenplaner.html" class="quick-card">
+            <div class="quick-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg>
+            </div>
+            <h4>Notenplaner</h4>
+            <p>Noten verwalten</p>
+          </a>
+          <a href="artikel.html" class="quick-card">
+            <div class="quick-card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            </div>
+            <h4>Wissen</h4>
+            <p>Tipps & Artikel</p>
+          </a>
+        </div>
+      </section>
+
+      <!-- Self-Management Tools -->
+      <section class="animate-fade-in mood-section" style="animation-delay: 200ms;">
+        <div class="section-header">
+          <h2>Dein Wohlbefinden</h2>
+        </div>
+        
+        <div class="mood-grid">
+          <!-- Calendar -->
+          <div class="calendar-card">
+            <div class="calendar-header">
+              <h3 class="calendar-month-year">Januar 2025</h3>
+              <div class="calendar-nav">
+                <button class="calendar-prev" aria-label="Vorheriger Monat">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+                </button>
+                <button class="calendar-next" aria-label="Nächster Monat">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="calendar-weekdays">
+              <div class="calendar-weekday">Mo</div>
+              <div class="calendar-weekday">Di</div>
+              <div class="calendar-weekday">Mi</div>
+              <div class="calendar-weekday">Do</div>
+              <div class="calendar-weekday">Fr</div>
+              <div class="calendar-weekday">Sa</div>
+              <div class="calendar-weekday">So</div>
+            </div>
+            <div class="calendar-days">
+              <!-- Days will be populated by JS -->
+            </div>
+            
+            <div class="mood-legend">
+              <div class="mood-legend-item">
+                <div class="mood-legend-dot" style="background: var(--mood-great);"></div>
+                <span>Sehr gut</span>
+              </div>
+              <div class="mood-legend-item">
+                <div class="mood-legend-dot" style="background: var(--mood-good);"></div>
+                <span>Gut</span>
+              </div>
+              <div class="mood-legend-item">
+                <div class="mood-legend-dot" style="background: var(--mood-neutral);"></div>
+                <span>Neutral</span>
+              </div>
+              <div class="mood-legend-item">
+                <div class="mood-legend-dot" style="background: var(--mood-unwell);"></div>
+                <span>Unwohl</span>
+              </div>
+              <div class="mood-legend-item">
+                <div class="mood-legend-dot" style="background: var(--mood-bad);"></div>
+                <span>Schlecht</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mood Chart -->
+          <div class="mood-chart-card">
+            <div class="mood-chart-header">
+              <h3>Stimmungsverlauf</h3>
+            </div>
+            <div class="mood-chart" style="height: 150px;">
+              <!-- Bars will be populated by JS -->
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-top: 0.5rem; font-size: 0.75rem; color: var(--muted-foreground);">
+              <span>Mo</span>
+              <span>Di</span>
+              <span>Mi</span>
+              <span>Do</span>
+              <span>Fr</span>
+              <span>Sa</span>
+              <span>So</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Mentors -->
+      <section class="animate-fade-in" style="animation-delay: 300ms;">
+        <div class="section-header">
+          <h2>Mentoren</h2>
+        </div>
+        <div class="mentors-carousel">
+          <div class="mentor-card">
+            <img src="assets/martina-mentor.png" alt="Martina" class="mentor-image">
+            <div class="mentor-content">
+              <h4 class="mentor-name">Martina</h4>
+              <p class="mentor-field">Stressmanagement</p>
+              <p class="mentor-desc">Expertin für Prüfungsangst und Stressbewältigung im Studium.</p>
+            </div>
+          </div>
+          <div class="mentor-card">
+            <img src="assets/oliver-mentor.png" alt="Oliver" class="mentor-image">
+            <div class="mentor-content">
+              <h4 class="mentor-name">Oliver</h4>
+              <p class="mentor-field">Zeitmanagement</p>
+              <p class="mentor-desc">Hilft dir bei Motivation und effektiver Zeitplanung.</p>
+            </div>
+          </div>
+          <div class="mentor-card">
+            <img src="assets/sarah-mentor.png" alt="Sarah" class="mentor-image">
+            <div class="mentor-content">
+              <h4 class="mentor-name">Sarah</h4>
+              <p class="mentor-field">Work-Life-Balance</p>
+              <p class="mentor-desc">Spezialistin für Selbstfürsorge und Balance im Alltag.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="page-container py-6">
+      <div class="disclaimer">
+        <p>
+          <strong>Hinweis:</strong> Diese App ersetzt keine professionelle psychologische oder medizinische Beratung. 
+          Bei akuten Krisen wende dich bitte an die <a href="tel:0800-1110111">Telefonseelsorge (0800 111 0 111)</a> oder 
+          suche professionelle Hilfe.
+        </p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <a href="impressum.html">Impressum</a>
+    </footer>
+  </main>
+
+  <!-- Mood Dialog -->
+  <div class="dialog-overlay"></div>
+  <div class="dialog" id="mood-dialog" style="overflow: visible;">
+    <img src="assets/sloth-mascot.png" alt="Hugo" class="mood-dialog-mascot">
+    <div class="dialog-content" style="padding-top: 1.5rem;">
+      <p style="color: var(--muted-foreground); font-size: 0.875rem; margin-bottom: 0.25rem;">Willkommen!</p>
+      <h2 style="color: var(--primary); margin-bottom: 2rem; font-size: 1.75rem;">Wie fühlst du dich heute?</h2>
+      
+      <div class="mood-options">
+        <button class="mood-option" data-mood="bad">
+          <div class="mood-emoji" style="background: var(--mood-bad);">😢</div>
+          <span class="mood-label">schlecht</span>
+        </button>
+        <button class="mood-option" data-mood="unwell">
+          <div class="mood-emoji" style="background: var(--mood-unwell);">😟</div>
+          <span class="mood-label">unwohl</span>
+        </button>
+        <button class="mood-option" data-mood="neutral">
+          <div class="mood-emoji" style="background: var(--mood-neutral);">😐</div>
+          <span class="mood-label">neutral</span>
+        </button>
+        <button class="mood-option" data-mood="good">
+          <div class="mood-emoji" style="background: var(--mood-good);">🙂</div>
+          <span class="mood-label">gut</span>
+        </button>
+        <button class="mood-option" data-mood="great">
+          <div class="mood-emoji" style="background: var(--mood-great);">😆</div>
+          <span class="mood-label">sehr gut</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Coping Dialog -->
+  <div class="dialog" id="coping-dialog">
+    <button class="dialog-close" aria-label="Schließen">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+    <div class="dialog-content">
+      <h2 style="margin-bottom: 1rem;">🦥 Hugos Coping-Plan</h2>
+      <p style="color: var(--muted-foreground); margin-bottom: 1.5rem;">
+        Dein persönlicher Begleiter für schwierige Momente.
+      </p>
+      
+      <div style="space-y: 1rem;">
+        <div style="background: var(--accent); padding: 1rem; border-radius: 0.75rem; margin-bottom: 1rem;">
+          <h4 style="margin-bottom: 0.5rem;">🧘 Atemübung</h4>
+          <p style="font-size: 0.875rem; color: var(--muted-foreground);">4 Sekunden einatmen, 4 Sekunden halten, 4 Sekunden ausatmen.</p>
+        </div>
+        <div style="background: var(--accent); padding: 1rem; border-radius: 0.75rem; margin-bottom: 1rem;">
+          <h4 style="margin-bottom: 0.5rem;">🎵 Entspannungsmusik</h4>
+          <p style="font-size: 0.875rem; color: var(--muted-foreground);">Höre beruhigende Musik für 5 Minuten.</p>
+        </div>
+        <div style="background: var(--accent); padding: 1rem; border-radius: 0.75rem;">
+          <h4 style="margin-bottom: 0.5rem;">📞 Sprich mit jemandem</h4>
+          <p style="font-size: 0.875rem; color: var(--muted-foreground);">Telefonseelsorge: 0800 111 0 111 (kostenlos, 24/7)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script>
+    // Update username from localStorage
+    document.addEventListener('DOMContentLoaded', () => {
+      const username = localStorage.getItem('username') || 'Gast';
+      const usernameEl = document.querySelector('.dashboard-username');
+      if (usernameEl) {
+        // Check for guest mode
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('guest') === 'true') {
+          usernameEl.textContent = 'Gastmodus';
+          document.querySelector('.dashboard-welcome p').textContent = 'Willkommen im';
+        } else {
+          usernameEl.textContent = username;
+        }
+      }
+    });
+  </script>
+</body>
+</html>

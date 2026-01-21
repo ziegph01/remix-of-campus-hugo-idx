@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Campus Hugo - Dein Begleiter für ein gesundes Studium. Mentale Gesundheit, Community und Selbstmanagement.">
+  <title>Campus Hugo - Dein Begleiter für ein gesundes Studium</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="assets/sloth-icon.png">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="header-logo">
+        <img src="assets/sloth-icon.png" alt="Logo">
+        <div class="header-logo-text">
+          <span class="header-logo-title">Campus Hugo</span>
+        </div>
+      </a>
+      
+      <button class="menu-btn" aria-label="Menü öffnen">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+  
+  <!-- Menu Overlay -->
+  <div class="menu-overlay"></div>
+  <div class="menu-dropdown">
+    <nav>
+      <a href="index.html">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Home
+      </a>
+      <div class="menu-divider"></div>
+      <a href="login.html" class="accent-link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+        Anmelden
+      </a>
+    </nav>
+  </div>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container" style="max-width: 48rem;">
+        <img src="assets/hugo-mascot.png" alt="Hugo - Dein Begleiter" class="hero-mascot">
+        
+        <h1>
+          Dein Begleiter für ein
+          <span>gesundes Studium</span>
+        </h1>
+        
+        <p>
+          Mentale Gesundheit, Community und Selbstmanagement – 
+          alles an einem Ort für Studierende.
+        </p>
+        
+        <div class="hero-buttons">
+          <a href="registrierung.html" class="btn btn-primary btn-lg">
+            Kostenlos starten
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+          <a href="dashboard.html?guest=true" class="btn btn-outline btn-lg">
+            Als Gast erkunden
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+      <div class="container">
+        <div class="features-header">
+          <h2>Was macht Campus Hugo besonders?</h2>
+          <p>Entwickelt von Studierenden für Studierende – mit Fokus auf das, was wirklich hilft.</p>
+        </div>
+        
+        <div class="features-grid">
+          <a href="forum.html?guest=true" class="feature-card card-hover">
+            <div class="feature-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h3>Community</h3>
+            <p>Tausche dich anonym mit anderen Studierenden aus. Du bist nicht allein mit deinen Herausforderungen.</p>
+          </a>
+          
+          <a href="dashboard.html?guest=true" class="feature-card card-hover">
+            <div class="feature-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+            </div>
+            <h3>Selbstmanagement</h3>
+            <p>Mood-Tracking, Notenplaner und mehr – behalte den Überblick über dein Wohlbefinden und Studium.</p>
+          </a>
+          
+          <a href="berater.html?guest=true" class="feature-card card-hover">
+            <div class="feature-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+            </div>
+            <h3>Beratung</h3>
+            <p>Finde professionelle Unterstützung wenn du sie brauchst – niedrigschwellig und vertraulich.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+      <div class="container">
+        <h2>Bereit loszulegen?</h2>
+        <p>Registriere dich kostenlos und entdecke, wie Campus Hugo dein Studium unterstützen kann.</p>
+        <a href="registrierung.html" class="btn btn-primary btn-lg">
+          Jetzt registrieren
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <a href="impressum.html">Impressum</a>
+    </footer>
+  </main>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
