@@ -298,14 +298,6 @@ h4 { font-size: 1.25rem; font-weight: 700; }
 
 .btn-ghost:hover { background: rgba(0,0,0,0.05); }
 
-.btn-destructive {
-  background: transparent;
-  color: var(--destructive);
-  border: none;
-}
-
-.btn-destructive:hover { background: hsl(0 72% 50% / 0.1); }
-
 .btn-lg {
   padding: 0.875rem 2rem;
   font-size: 1rem;
@@ -319,7 +311,6 @@ h4 { font-size: 1.25rem; font-weight: 700; }
 }
 
 .btn svg { width: 1rem; height: 1rem; }
-.btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
 /* ===== CARDS ===== */
 .card {
@@ -1176,67 +1167,18 @@ select.form-input {
 }
 
 .page-header-icon {
-  width: 3rem;
-  height: 3rem;
+  width: 3.5rem;
+  height: 3.5rem;
   background: rgba(0, 166, 126, 0.1);
-  border-radius: 50%;
+  border-radius: 0.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
 }
 
-.page-header-icon svg { width: 1.5rem; height: 1.5rem; color: var(--primary); }
-.page-header h1 { font-size: 1.875rem; margin-bottom: 0.25rem; }
+.page-header-icon svg { width: 1.75rem; height: 1.75rem; color: var(--primary); }
+.page-header h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
 .page-header p { color: var(--muted-foreground); font-size: 0.875rem; }
-
-/* Booked Appointments Banner */
-.booked-appointments-banner {
-  background: hsl(120 40% 50% / 0.1);
-  border: 1px solid hsl(120 40% 50% / 0.3);
-  border-radius: 0.75rem;
-  padding: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.booked-appointments-banner h3 {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-weight: 600;
-  margin-bottom: 0.75rem;
-}
-
-.booked-appointments-banner h3 svg { color: var(--mood-good); }
-
-.booked-appointment-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  padding: 0.75rem;
-  margin-bottom: 0.5rem;
-}
-
-.booked-appointment-item:last-child { margin-bottom: 0; }
-
-.booked-appointment-info {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.booked-appointment-info img {
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.booked-appointment-info p { font-weight: 500; font-size: 0.875rem; }
-.booked-appointment-info span { font-size: 0.75rem; color: var(--muted-foreground); }
 
 .info-cards {
   display: grid;
@@ -1251,115 +1193,26 @@ select.form-input {
 .info-card {
   background: var(--card);
   border-radius: 1rem;
-  padding: 1rem;
+  padding: 1.25rem;
+  text-align: center;
   border: 1px solid rgba(0,0,0,0.05);
-  transition: all 0.2s;
 }
 
-.info-card:not(.disabled) { cursor: pointer; }
-.info-card:not(.disabled):hover { border-color: var(--primary); }
-.info-card.disabled { opacity: 0.6; cursor: not-allowed; }
-
 .info-card-icon {
-  width: 2.5rem;
-  height: 2.5rem;
-  margin-bottom: 0.5rem;
+  width: 3rem;
+  height: 3rem;
+  margin: 0 auto 0.75rem;
   background: rgba(0, 166, 126, 0.1);
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.info-card-icon svg { width: 1.25rem; height: 1.25rem; color: var(--primary); }
-.info-card.disabled .info-card-icon svg { color: var(--muted-foreground); }
-.info-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem; }
+.info-card-icon svg { width: 1.5rem; height: 1.5rem; color: var(--primary); }
+.info-card h3 { font-size: 1rem; margin-bottom: 0.25rem; }
 .info-card p { font-size: 0.875rem; color: var(--muted-foreground); }
 
-/* Berater Card - Horizontal Layout like React */
-.berater-list { display: flex; flex-direction: column; gap: 1rem; }
-
-.berater-card-horizontal {
-  background: var(--card);
-  border-radius: 1rem;
-  padding: 1.5rem;
-  border: 1px solid rgba(0,0,0,0.05);
-  transition: all 0.2s;
-}
-
-.berater-card-horizontal:hover { border-color: var(--primary); }
-
-.berater-card-inner {
-  display: flex;
-  gap: 1rem;
-  align-items: flex-start;
-}
-
-.berater-card-horizontal .berater-image {
-  width: 5rem;
-  height: 5rem;
-  border-radius: 0.75rem;
-  object-fit: cover;
-  flex-shrink: 0;
-}
-
-.berater-card-horizontal .berater-content { flex: 1; min-width: 0; }
-
-.berater-card-horizontal .berater-header {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-  margin-bottom: 0.25rem;
-}
-
-.berater-card-horizontal .berater-name {
-  font-size: 1.25rem;
-  font-weight: 700;
-}
-
-.berater-card-horizontal .berater-role {
-  font-size: 0.875rem;
-  color: var(--primary);
-  margin-bottom: 0.5rem;
-}
-
-.berater-card-horizontal .berater-desc {
-  font-size: 0.875rem;
-  color: var(--muted-foreground);
-  margin-bottom: 1rem;
-  line-height: 1.5;
-}
-
-.berater-card-horizontal .berater-actions {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.berater-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.375rem;
-  padding: 0.125rem 0.5rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 500;
-}
-
-.berater-status.available { background: hsl(120 40% 50% / 0.2); color: hsl(120 40% 35%); }
-.berater-status.unavailable { background: var(--muted); color: var(--muted-foreground); }
-
-.berater-status::before {
-  content: '';
-  width: 0.375rem;
-  height: 0.375rem;
-  border-radius: 50%;
-}
-
-.berater-status.available::before { background: hsl(120 40% 40%); }
-.berater-status.unavailable::before { background: var(--muted-foreground); }
-
-/* Legacy berater grid (for backwards compat) */
 .berater-grid {
   display: grid;
   gap: 1.5rem;
@@ -1387,10 +1240,36 @@ select.form-input {
 }
 
 .berater-image { width: 100%; height: 180px; object-fit: cover; }
+
 .berater-content { padding: 1.25rem; }
 .berater-name { font-size: 1.125rem; font-weight: 600; margin-bottom: 0.25rem; }
 .berater-role { font-size: 0.875rem; color: var(--primary); margin-bottom: 0.75rem; }
 .berater-desc { font-size: 0.875rem; color: var(--muted-foreground); margin-bottom: 1rem; }
+
+.berater-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.berater-status.available { background: hsl(145 60% 90%); color: hsl(145 60% 30%); }
+.berater-status.unavailable { background: var(--muted); color: var(--muted-foreground); }
+
+.berater-status::before {
+  content: '';
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+}
+
+.berater-status.available::before { background: hsl(145 60% 40%); }
+.berater-status.unavailable::before { background: var(--muted-foreground); }
+
 .berater-actions { display: flex; gap: 0.5rem; }
 
 /* Chat */
@@ -1455,109 +1334,9 @@ select.form-input {
   border-radius: 0.75rem;
   outline: none;
   font-size: 0.875rem;
-  background: var(--background);
-  color: var(--foreground);
 }
 
 .chat-input input:focus { border-color: var(--primary); }
-
-/* Appointment Calendar Dialog */
-.appointment-calendar { margin-bottom: 1.5rem; }
-.appointment-calendar h3 { margin-bottom: 1rem; font-size: 1rem; }
-
-.appointment-dates {
-  display: flex;
-  gap: 0.5rem;
-  overflow-x: auto;
-  padding-bottom: 0.5rem;
-}
-
-.appointment-date-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0.75rem 1rem;
-  background: var(--muted);
-  border: 2px solid transparent;
-  border-radius: 0.75rem;
-  cursor: pointer;
-  transition: all 0.2s;
-  min-width: 4.5rem;
-}
-
-.appointment-date-btn:hover { border-color: var(--primary); }
-.appointment-date-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
-
-.appointment-date-btn .day { font-size: 0.75rem; opacity: 0.8; }
-.appointment-date-btn .date { font-size: 1.25rem; font-weight: 700; }
-.appointment-date-btn .month { font-size: 0.625rem; opacity: 0.7; }
-
-.appointment-slots { margin-top: 1rem; }
-.appointment-slots h4 { margin-bottom: 0.75rem; font-size: 0.875rem; color: var(--muted-foreground); }
-
-.slot-list { display: flex; flex-direction: column; gap: 0.5rem; max-height: 300px; overflow-y: auto; }
-
-.slot-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.75rem 1rem;
-  background: var(--muted);
-  border-radius: 0.5rem;
-  transition: all 0.2s;
-}
-
-.slot-item:hover { background: hsl(161 93% 30% / 0.1); }
-
-.slot-berater {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.slot-berater img {
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.slot-berater-info p { font-weight: 500; font-size: 0.875rem; }
-.slot-berater-info span { font-size: 0.75rem; color: var(--muted-foreground); }
-
-.slot-time { font-weight: 600; color: var(--primary); margin-right: 0.75rem; }
-
-/* Booking Confirmation */
-.booking-confirmation {
-  text-align: center;
-  padding: 1rem 0;
-}
-
-.booking-confirmation .success-icon {
-  width: 4rem;
-  height: 4rem;
-  background: hsl(120 40% 50% / 0.2);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 1rem;
-}
-
-.booking-confirmation .success-icon svg { width: 2rem; height: 2rem; color: var(--mood-good); }
-
-.booking-confirmation h2 { margin-bottom: 0.5rem; color: var(--mood-good); }
-.booking-confirmation p { color: var(--muted-foreground); margin-bottom: 1rem; }
-
-.booking-details {
-  background: var(--muted);
-  border-radius: 0.75rem;
-  padding: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.booking-details p { margin: 0.25rem 0; font-size: 0.875rem; }
-.booking-details strong { color: var(--foreground); }
 
 /* ===== NOTENPLANER ===== */
 .stats-grid {

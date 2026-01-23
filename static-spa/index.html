@@ -503,15 +503,9 @@
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
         </div>
         <div>
-          <h1>Berater</h1>
-          <p>Du bist nicht allein. Lass dir unter die Arme greifen.</p>
+          <h1>Beratung & Unterstützung</h1>
+          <p>Finde die richtige Hilfe für dich</p>
         </div>
-      </div>
-      
-      <!-- Booked Appointments -->
-      <div class="booked-appointments-banner" id="booked-appointments-banner" style="display: none;">
-        <h3><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg> Deine gebuchten Termine</h3>
-        <div id="booked-appointments-list"></div>
       </div>
       
       <!-- Info Cards -->
@@ -520,27 +514,28 @@
           <div class="info-card-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
           </div>
-          <h3>Telefonische Beratung</h3>
-          <p>Mo-Fr 9-17 Uhr</p>
+          <h3>Telefonseelsorge</h3>
+          <p>0800 111 0 111 (kostenlos, 24/7)</p>
         </div>
-        <div class="info-card" id="appointment-card" onclick="openDialog('appointment-dialog')">
+        <div class="info-card">
           <div class="info-card-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
           </div>
-          <h3>Terminvereinbarung</h3>
-          <p>Persönliche Gespräche</p>
+          <h3>Termine</h3>
+          <p>Buche direkt online</p>
         </div>
-        <div class="info-card" onclick="openDialog('anonymous-chat-dialog')">
+        <div class="info-card">
           <div class="info-card-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
           </div>
-          <h3>Chat-Beratung</h3>
-          <p>Anonym & vertraulich</p>
+          <h3>Chat</h3>
+          <p>Schreibe uns direkt</p>
         </div>
       </div>
       
       <!-- Berater List -->
-      <div class="berater-list" id="berater-list"></div>
+      <h2 class="section-title">Unsere Berater</h2>
+      <div class="berater-grid" id="berater-list"></div>
     </div>
     
     <footer class="footer">
@@ -999,57 +994,6 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
         </button>
       </div>
-    </div>
-  </div>
-
-  <!-- Appointment Calendar Dialog -->
-  <div class="dialog" id="appointment-dialog" style="max-width: 36rem;">
-    <button class="dialog-close" onclick="closeDialog('appointment-dialog')">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-    </button>
-    <div class="dialog-content">
-      <h2 style="margin-bottom: 1.5rem;">Termin buchen</h2>
-      
-      <div class="appointment-calendar">
-        <h3>Wähle einen Tag:</h3>
-        <div class="appointment-dates" id="appointment-dates"></div>
-      </div>
-      
-      <div class="appointment-slots" id="appointment-slots-container" style="display: none;">
-        <h4>Verfügbare Termine:</h4>
-        <div class="slot-list" id="appointment-slots"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Booking Confirmation Dialog -->
-  <div class="dialog" id="booking-confirmation-dialog" style="max-width: 24rem;">
-    <div class="dialog-content">
-      <div class="booking-confirmation">
-        <div class="success-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-        </div>
-        <h2>Termin gebucht!</h2>
-        <p>Dein Termin wurde erfolgreich gebucht.</p>
-        <div class="booking-details" id="booking-details"></div>
-        <button class="btn btn-primary w-full" onclick="closeDialog('booking-confirmation-dialog')">Verstanden</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Anonymous Chat Dialog -->
-  <div class="dialog" id="anonymous-chat-dialog" style="max-width: 28rem;">
-    <button class="dialog-close" onclick="closeDialog('anonymous-chat-dialog')">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-    </button>
-    <div class="dialog-content">
-      <h2 style="margin-bottom: 0.5rem;">Anonyme Beratung</h2>
-      <p style="color: var(--muted-foreground); margin-bottom: 1rem; font-size: 0.875rem;">Schreibe dein Anliegen – unsere Berater antworten dir.</p>
-      
-      <div class="form-group">
-        <textarea id="anonymous-message" class="form-input" rows="4" placeholder="Was beschäftigt dich?"></textarea>
-      </div>
-      <button class="btn btn-primary w-full" onclick="sendAnonymousMessage()">Nachricht senden</button>
     </div>
   </div>
 
